@@ -1,0 +1,48 @@
+-- A Continuous Delivery Saga --
+
+At a company far far away, there is an awesome developer named Jess.
+
+Jess is going to make some changes to a python package her team is responsible for.
+She starts with creating a feature branch with `staging` branch as base.
+
+Current version is `1.2.3.dev8`.
+
+Jess makes a couple of changes. Everytime she pushes to her feature branch
+Jenkins runs the tests for her. While she develops she also tests her changes in an
+interactive test environment.
+
+When Jess is satisfied with her changes she figures out that this was not just a fix,
+but actually the addition of a backwards compatible feature. She updates the version number
+according to SemVer to `1.3.0.dev0`.
+
+Jess makes a Pull Request (PR) to merge to `staging` and Teammate Joe reviews and merges it.
+The PR cannot be merged until all tests has validated in Jenkins.
+
+When the PR is merged, Jenkins builds the `staging` branch and uploads `1.3.0.dev0` to the
+artifactory. It then bumps the dev version to `1.3.0.dev1` and pushes that change back
+to `staging` branch to prepare for the next release.
+
+Jess is so excited, she can't wait for the nightly job that will build the prerelease environment and include her dev release, so she triggers it by pushing an empty commit to `staging`.
+
+When the staging build finished, Jess logs in to the prerelease environment to manually validate her changes.
+
+Jess finds a couple of bugs so she moves back to her feature branch to root them out.
+She iterates above scenario until finally the prerelease environment is stable.
+
+The dev version has been incremented every time she's pushed to `staging` and
+the version is now `1.3.0.dev7`.
+
+Jess is ready for a release!
+
+Jess makes a PR to `master` and Joe again reviews and merges.
+
+Jenkins starts the release flow on `master`. It discards the dev suffix from the
+version number (`1.3.0`) and pushes that change back to `master` for traceability.
+Then it builds and uploads `1.3.0` to artifactory. Finally it bumps the fix version and adds
+the dev suffix (`1.3.1.dev0`) to prepare for the next release. The change is pushed both to
+`master` and `staging` to mitigate merge conflicts when making PR:s to master.
+
+Jess and Joe will work together for many years to come. Since Jenkins helps them keep
+their environments clean and traceable their professional relationship is stessless and
+happy and ever the envy of other teams that has yet to experience the power of Continuous Delivery.
+
