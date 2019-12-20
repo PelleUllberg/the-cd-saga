@@ -44,6 +44,6 @@ the dev suffix (`1.3.1.dev0`) to prepare for the next release. The change is pus
 `master` and `staging` to mitigate merge conflicts when making PR:s to master.
 
 Jess and Joe will work together for many years to come. Since Jenkins helps them keep
-their environments clean and traceable their professional relationship is stessless and
+their environments clean and traceable their professional relationship is stressless and
 happy and ever the envy of other teams that has yet to experience the power of Continuous Delivery.
 
